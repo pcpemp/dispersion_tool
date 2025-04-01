@@ -206,11 +206,11 @@ st.set_page_config(page_title=APP_TITLE, layout="wide")
 st.sidebar.header("Configuração")
 ticker_list_pt = list(AVAILABLE_TICKERS_PT.values()) # Use PT names for selection
 # Find default indices for selectboxes (e.g., S&P 500 and VIX)
-default_y_index = 0 # S&P 500
-default_x_index = 4 # VIX (adjust if order changes)
+default_y_index = 7 # S&P 500
+default_x_index = 0 # VIX (adjust if order changes)
 try:
-    default_y_index = ticker_list_pt.index("S&P 500")
-    default_x_index = ticker_list_pt.index("VIX")
+    default_y_index = ticker_list_pt.index("Índice Dólar Americano (DXY)")
+    default_x_index = ticker_list_pt.index("S&P 500")
 except ValueError:
     pass # Keep 0 and 4 if not found
 
@@ -223,7 +223,7 @@ if x_ticker == y_ticker:
     st.sidebar.error("Por favor, selecione tickers diferentes para os eixos X e Y.")
     st.stop()
 
-rolling_window_days = st.sidebar.number_input("Janela Móvel (Dias Úteis)", min_value=2, max_value=252 * 5, value=21, step=1, help="Número de dias úteis para o cálculo da variação percentual móvel.")
+rolling_window_days = st.sidebar.number_input("Janela Móvel (Dias Úteis)", min_value=2, max_value=252 * 5, value=50, step=1, help="Número de dias úteis para o cálculo da variação percentual móvel.")
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("#### Modo de Visualização")
@@ -425,7 +425,7 @@ if data_load_successful and not rolling_changes_full.empty and axis_limits and m
 
                 fig_main.add_trace(go.Scatter(
                     x=ellipse_x, y=ellipse_y, mode='lines',
-                    line=dict(color=DEFAULT_ELLIPSE_CONF_COLOR, width=1.5, dash="dot"),
+                    line=dict(color=DEFAULT_ELLIPSE_CONF_COLOR, width=3),
                     name=f'Elipse {confidence_key}', showlegend=False, hoverinfo='skip'
                 ))
 
